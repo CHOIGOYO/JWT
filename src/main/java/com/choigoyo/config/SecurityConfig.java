@@ -1,6 +1,7 @@
 package com.choigoyo.config;
 
 import com.choigoyo.filter.Filter1;
+import com.choigoyo.filter.Filter3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.addFilterBefore(new Filter1(),BasicAuthenticationFilter.class); // Filter의 순서를 지정해줌
+//        httpSecurity.addFilterBefore(new Filter1(),BasicAuthenticationFilter.class); // Filter의 순서를 지정해줌 // 이 방법 말고 FilterConfig에서 설정하도록 변경
+        httpSecurity.addFilterBefore(new Filter3(), BasicAuthenticationFilter.class); // 필터실행 우선순위 체크 테스트를 위해 추가
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session을 사용하지 않는다
                 .and()
