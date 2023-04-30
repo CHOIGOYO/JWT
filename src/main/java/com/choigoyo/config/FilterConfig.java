@@ -1,7 +1,7 @@
 package com.choigoyo.config;
 
-import com.choigoyo.filter.Filter1;
 import com.choigoyo.filter.Filter2;
+import com.choigoyo.filter.Filter3;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     @Bean
-    public FilterRegistrationBean<Filter1> filter1(){
-        FilterRegistrationBean<Filter1> bean = new FilterRegistrationBean<>(new Filter1());
+    public FilterRegistrationBean<Filter3> filter3(){
+        FilterRegistrationBean<Filter3> bean = new FilterRegistrationBean<>(new Filter3());
         bean.addUrlPatterns("/*"); // 모든 요청에서 필터를 적용
         bean.setOrder(0); // 필터의 순서 지정 / 우선순위 가장 높음
         return bean;
