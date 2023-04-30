@@ -12,4 +12,4 @@
     6. SQL - MySQL Driver
     7. JPA 
 # Velog 학습내용 정리
-https://velog.io/@choigoyo_o/series/Spring-Security
+https://velog.io/@choigoyo_o/series/JWT
