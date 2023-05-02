@@ -1,7 +1,7 @@
 package com.choigoyo.config;
 
+import com.choigoyo.config.JWT.JwtAuthenticationFilter;
 import com.choigoyo.filter.Filter1;
-import com.choigoyo.filter.Filter3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter)  // @CrossOrigin(인증 없을 때) , 시큐리티 필터에 등록(인증 있을 때)
                 .formLogin().disable() // id pw 로그인을 form 로그인을 하지 X
                 .httpBasic().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager())) // JWT 패키지에 있는 filter 등록
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('user') or hasRole('manager') or hasRole('admin')")
