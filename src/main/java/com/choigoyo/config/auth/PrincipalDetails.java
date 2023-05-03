@@ -1,6 +1,7 @@
 package com.choigoyo.config.auth;
 
 import com.choigoyo.entity.UserEntityJWT;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Data
 @NoArgsConstructor // 기본 생성자
 public class PrincipalDetails implements UserDetails {
     private UserEntityJWT user;

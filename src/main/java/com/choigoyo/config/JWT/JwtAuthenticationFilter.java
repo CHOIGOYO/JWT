@@ -1,5 +1,7 @@
 package com.choigoyo.config.JWT;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.choigoyo.config.auth.PrincipalDetails;
 import com.choigoyo.entity.UserEntityJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -66,5 +72,28 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ex.printStackTrace();
             return null;
         }
+    }
+
+    // 순서 ->  attemptAuthentication 에서 인증이 정상적으로 실행되고 successfulAuthentication 메서드 실행
+    // JWT 토큰을 만들어서 request 요청한 사용자에게 토큰을 응답과함께 전달
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        System.out.println("사용자 인증이 완료되어 successfulAuthentication 메서드가 실행됩니다.");
+
+        PrincipalDetails principalDetails = (PrincipalDetails)authResult.getPrincipal();
+
+        // 빌드패턴으로 토큰 생성하기
+        String jwtToken = JWT.create()
+                .withSubject(principalDetails.getUsername()+"님의 토큰")
+                .withExpiresAt(new Date(System.currentTimeMillis()+(6000*10))) // 토큰의 유효시간 10분으로 지정
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("username", principalDetails.getUser().getUserName())
+                .sign(Algorithm.HMAC512("server-secret")); // server만 알고있는 secret값 으로 서명
+
+        response.addHeader("Authentication","Bearer "+jwtToken);  // 사용자에게 응답
+        System.out.println("==================토큰 생성==================");
+        System.out.println("name : Authentication");
+        System.out.println("value: Bearer "+ jwtToken);
+
     }
 }
