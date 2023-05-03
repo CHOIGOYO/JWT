@@ -37,11 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(),userRepository))  // filter 등록
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
-                .access("hasRole('user') or hasRole('manager') or hasRole('admin')")
+                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/v1/manager/**")
-                .access("hasRole('manager') or hasRole('admin')")
+                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/v1/admin/**")
-                .access("hasRole('admin')")
+                .access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll(); // 설정 외 모든 경로는 인증없이 접근가능
     }
 }

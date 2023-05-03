@@ -25,7 +25,7 @@ public class UserEntityJWT {
         if (this.role.length() > 0) {
             return Arrays.asList(this.role.split(",")); // 콤마 기준으로 잘라서 반환
         }
-        return new ArrayList<>(); // null이 뜨는 것을 방지하기 위해 임시로 리스트 반환
+        return new ArrayList<>(); // null 이 뜨는 것을 방지하기 위해 임시로 리스트 반환
     }
 
 }

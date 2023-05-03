@@ -31,7 +31,7 @@ public class RestApiController {
     @PostMapping("join")
     public String join(@RequestBody UserEntityJWT userEntityJWT) {
         userEntityJWT.setPassword(bCryptPasswordEncoder.encode(userEntityJWT.getPassword())); // 비밀번호 암호화
-        userEntityJWT.setRole("user"); // 회원가입 기본 역할 세팅
+        userEntityJWT.setRole("ROLE_USER"); // 회원가입 기본 역할 세팅
         userRepository.save(userEntityJWT);
         return "회원가입이 완료되었습니다.";
     }

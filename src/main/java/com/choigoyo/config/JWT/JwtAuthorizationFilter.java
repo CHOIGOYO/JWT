@@ -49,6 +49,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         // 서명이 정상적으로 되면 if문 실행
         if (userName != null) {
             UserEntityJWT userEntityJWT = userRepository.findByUserName(userName);
+            System.out.println("=================== 토큰으로 사용자 정보 찾기 ===================");
+            System.out.println("userEntityJWT : "+userEntityJWT);
             PrincipalDetails principalDetails = new PrincipalDetails(userEntityJWT);
 
             Authentication authentication =
