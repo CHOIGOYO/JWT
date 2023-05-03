@@ -3,6 +3,7 @@ package com.choigoyo.controller;
 import com.choigoyo.entity.UserEntityJWT;
 import com.choigoyo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,5 +34,23 @@ public class RestApiController {
         userEntityJWT.setRole("user"); // 회원가입 기본 역할 세팅
         userRepository.save(userEntityJWT);
         return "회원가입이 완료되었습니다.";
+    }
+
+    // user,manager,admin 접근 가능
+    @GetMapping("/api/v1/user")
+    public String user(){
+        return "user";
+    }
+
+    // manager,admin 접근 가능
+    @GetMapping("/api/v1/manager")
+    public String manager(){
+        return "manager";
+    }
+
+    // admin 접근 가능
+    @GetMapping("/api/v1/admin")
+    public String admin(){
+        return "admin";
     }
 }

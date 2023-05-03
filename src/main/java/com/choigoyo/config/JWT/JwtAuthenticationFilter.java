@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             // authenticate 객체가 session 영역에 저장됨
             PrincipalDetails principalDetails = (PrincipalDetails)authenticate.getPrincipal();
             System.out.println("==================로그인 완료=================="); // 구분선
-            System.out.println("principalDetails userName :"+principalDetails.getUsername());
+            System.out.println("principalDetails userName :"+principalDetails.getUser().getUserName());
             System.out.println("==============================================="); // 구분선
             return authenticate;
         } catch (Exception ex) {
@@ -84,13 +84,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 빌드패턴으로 토큰 생성하기
         String jwtToken = JWT.create()
-                .withSubject(principalDetails.getUsername()+"님의 토큰")
-                .withExpiresAt(new Date(System.currentTimeMillis()+(6000*10))) // 토큰의 유효시간 10분으로 지정
+                .withSubject("JWT-TOKEN")
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10))) // 토큰의 유효시간을 10분으로 지정
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("username", principalDetails.getUser().getUserName())
                 .sign(Algorithm.HMAC512("server-secret")); // server만 알고있는 secret값 으로 서명
 
         response.addHeader("Authentication","Bearer "+jwtToken);  // 사용자에게 응답
+
         System.out.println("==================토큰 생성==================");
         System.out.println("name : Authentication");
         System.out.println("value: Bearer "+ jwtToken);

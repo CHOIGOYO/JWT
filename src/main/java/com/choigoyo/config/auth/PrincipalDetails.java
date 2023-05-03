@@ -29,7 +29,7 @@ public class PrincipalDetails implements UserDetails {
         user.getRoleList().forEach(r ->{
             authorities.add(() -> r);
         });
-        return null;
+        return authorities;
     }
 
     @Override
